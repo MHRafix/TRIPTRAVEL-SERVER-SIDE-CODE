@@ -40,6 +40,7 @@ async function run() {
         const orderedFoodsCollection = database.collection('OrderedFoods');
         const hotelsCollection = database.collection('Hotels');
         const bookedTrip = database.collection('BookedTrip');
+        const bookedHotel = database.collection('BookedHotel');
         
 
         /*******************
@@ -123,10 +124,17 @@ async function run() {
         
         
         
-        // Save the trippack booking data to the booking list
-        app.post('/bookTripPack', async (req, res) => {
+        // Save the trippack booking data to the trip booking list
+        app.post('/bookTripP', async (req, res) => {
             const information = req.body;
             const result = await bookedTrip.insertOne(information);
+            res.json(result);
+        });
+
+        // Save the hotel booking data to the hotel booking list
+        app.post('/bookHotel', async (req, res) => {
+            const information = req.body;
+            const result = await bookedHotel.insertOne(information);
             res.json(result);
         });
 

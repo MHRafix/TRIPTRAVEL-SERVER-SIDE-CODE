@@ -194,8 +194,9 @@ async function run() {
         });
        
         // Get carted foods data from the mongodb database
-        app.get('/foodsCartList', async (req, res) => {
-            const findCartFoods = cartedFoodsCollection.find({});
+        app.get('/foodsCartList/:email', async (req, res) => {
+            const query = {email: req.params.email};
+            const findCartFoods = cartedFoodsCollection.find(query);
             const cartFood = await findCartFoods.toArray();
             res.send(cartFood);
         });

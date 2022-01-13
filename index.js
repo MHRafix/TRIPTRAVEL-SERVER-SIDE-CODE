@@ -200,6 +200,14 @@ async function run() {
             res.send(cartFood);
         });
 
+        // Get my booked trip from the mongodb database
+        app.get('/myBookedTrips/:email', async (req, res) => {
+            const query = {email: req.params.email};
+            const findMyTrips = bookedTrip.find(query);
+            const myTrip = await findMyTrips.toArray();
+            res.send(myTrip);
+        });
+
 
 
         /*********************************

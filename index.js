@@ -33,7 +33,6 @@ async function run() {
         // Recognize the database and data collection
         const database = client.db('asiaAdvanture'); // Database name
         const packagesCollection = database.collection('travelPackages');
-        const bookingCollection = database.collection('BookedPackages');
         const savedTripCollection = database.collection('SavedTrip');
         const resturantsCollection = database.collection('ResturantBranch');
         const cartedFoodsCollection = database.collection('FoodsCartList');
@@ -61,14 +60,6 @@ async function run() {
             const result = await packagesCollection.insertOne(food);
             res.json(result);
 
-        });
- 
-        // Booked Package API
-        app.post('/BookedPackages', async(req, res) => {
-        const tripPack = req.body;
-        const result = await bookingCollection.insertOne(tripPack);
-        res.json(result);
-       
         });
 
         // Save the package book latter list
@@ -209,19 +200,19 @@ async function run() {
             res.send(myTrip);
         });
 
+        // Get my booked trip from the mongodb database
+        app.get('/myOrderedFoods/:email', async (req, res) => {
+            const query = {email: req.params.email};
+            const findMyFoods = orderedFoodsCollection.find(query);
+            const myFood = await findMyFoods.toArray();
+            res.send(myFood);
+        });
+
 
 
         /*********************************
          * All delete API operation here
          * *******************************/
-        // Delete the packages from the database using delete api
-        app.delete('/myOrders/:id', async(req, res) => {
-            const id = req.params.id;
-            const query = { _id:ObjectId(id) };
-            const result = await bookingCollection.deleteOne(query);
-            res.json(result);
-        });
-
         // Delete selected saved trip from the database
         app.delete('/savedTrip/:id', async(req, res) => {
             const id = req.params.id;

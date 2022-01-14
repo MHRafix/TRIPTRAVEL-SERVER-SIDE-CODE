@@ -222,8 +222,33 @@ async function run() {
         });
 
 
+        // Delete selected food from the database
+        app.delete('/foodsCartList/:email/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = { _id:ObjectId(id) };
+            const result = await cartedFoodsCollection.deleteOne(query);
+            res.json(result);
+        });
+
+        // Delete selected ordered foods from the database
+        app.delete('/myOrderedFoods/:email/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = { _id:ObjectId(id) };
+            const result = await orderedFoodsCollection.deleteOne(query);
+            res.json(result);
+        });
+
+        // Delete selected booked trip from the database
+        app.delete('/myBookedTrips/:email/:id', async(req, res) => {
+            const id = req.params.id;
+            const query = { _id:ObjectId(id) };
+            const result = await savedTripCollection.deleteOne(query);
+            res.json(result);
+        });
+
+
         /**************************************
-         Dtripe payment method intrigate here 
+         Stripe payment method intrigate here 
         ***************************************/
         app.post("/create-payment-intent", async (req, res) => {
         const paymentInfo = req.body;

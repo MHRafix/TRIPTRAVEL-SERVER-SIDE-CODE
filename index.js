@@ -1,10 +1,11 @@
 const express = require('express');
 
-// Import mongodb, cors, objectId and dotenv
+// Import mongodb, cors, objectId, stripe and dotenv
 const { MongoClient } = require('mongodb');
 const cors = require('cors');
 require('dotenv').config();
 const ObjectId = require('mongodb').ObjectId;
+const stripe = require("stripe")(process.env.STRIPE_SECRET);
 const fileUpload = require('express-fileupload');
 
 // App and Port
@@ -254,9 +255,9 @@ async function run() {
         const paymentInfo = req.body;
         const amount = paymentInfo.payableAmount * 100;
         const paymentIntent =  await stripe.paymentIntents.create({
-            currency: "usd",  
+            currency: "usd",
             amount: amount,
-            payment_method_types: [ 'card']
+            payment_method_types: ['card']
         });
 
         res.json({ clientSecret: paymentIntent.client_secret });

@@ -210,6 +210,63 @@ async function run() {
         });
 
 
+         /*************
+         * Update Api
+         * ***********/
+        // Update ordered foods from orderedfoodscollection
+        app.put('/myOrderedFoods/:email/:id', async (req, res) => {
+            const id = req.params.id;
+            const payment = req.body;
+            const filter = {_id: ObjectId(id)};
+            const updateDoc = {
+                $set: {
+                    payment: payment,
+                    paymentStatus: true,
+                    status: 'Approved'
+                }
+            };
+            const result = await orderedFoodsCollection.updateOne(filter
+                , updateDoc);
+                res.json(result);
+            });
+            
+            // Update booked trips from bookedTripscollection
+            app.put('/myBookedTrips/:email/:id', async (req, res) => {
+            const id = req.params.id;
+            const payment = req.body;
+            const filter = {_id: ObjectId(id)};
+            const updateDoc = {
+                $set: {
+                    payment: payment,
+                    paymentStatus: true,
+                    status: 'Approved'
+                }
+            };
+            const result = await bookedTrip.updateOne(filter
+                , updateDoc);
+                res.json(result);
+            });
+
+            // Update booked hotel from bookedHotelscollection
+            app.put('/allHotelBed/:email/:id', async (req, res) => {
+            const id = req.params.id;
+            const payment = req.body;
+            const filter = {_id: ObjectId(id)};
+            const updateDoc = {
+                $set: {
+                    payment: payment,
+                    paymentStatus: true,
+                    status: 'Approved'
+                }
+            };
+            const result = await hotelsCollection.updateOne(filter
+                , updateDoc);
+                res.json(result);
+            });
+    
+    
+    
+
 
         /*********************************
          * All delete API operation here

@@ -31,7 +31,7 @@ async function run() {
         await client.connect();
 
         // Recognize the database and data collection
-        const database = client.db('asiaAdvanture'); // Database name
+        const database = client.db('TripTravel'); // Database name
         const packagesCollection = database.collection('travelPackages');
         const savedTripCollection = database.collection('SavedTrip');
         const resturantsCollection = database.collection('ResturantBranch');
